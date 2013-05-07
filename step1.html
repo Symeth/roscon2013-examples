@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- The default styling is provided by http://getbootstrap.com -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+
+  <!-- jQuery and display.js are conveniences for interacting with the DOM -->
+  <script src="js/jquery.js"></script>
+  <script src="js/display.js"></script>
+
+  <!-- ROSLIBJS -->
+  <!-- EventEmitter2 is the sole dependency of roslibjs -->
+  <script src="js/eventemitter2.js"></script>
+  <!-- Roslibjs handles core ROS functionality in the browser -->
+  <script src="js/roslib.js"></script>
+
+  <script>
+    function init() {
+      // ----------------------------------------------------------------------
+      // Connecting to rosbridge
+      // ----------------------------------------------------------------------
+
+      // The Ros object is responsible for connecting to rosbridge.
+      var ros = new ROSLIB.Ros();
+      // When a connection is established with rosbridge, a 'connection' event
+      // is emitted. In the event callback, we print a success message to the
+      // screen.
+      ros.on('connection', function() {
+        // displaySuccess is a convenience function for outputting messages in
+        // HTML.
+        displaySuccess('Roslibjs connected to rosbridge.');
+      });
+      // Connects to rosbridge.
+      ros.connect('ws://turtlebot4.willowgarage.com:9090');
+    }
+  </script>
+</head>
+<body onload="init()">
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Robot Web Tools</a>
+    </div>
+  </div>
+  <div class="container">
+    <h1>Step 1 <small>Connecting to ROS</small></h1>
+    <div id="messages">
+      <div class="alert">
+        Waiting to connect to rosbridge.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
